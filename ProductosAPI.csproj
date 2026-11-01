@@ -1,0 +1,38 @@
+<!--
+  ============================================================================
+   ProductosAPI.csproj  —  La "ficha técnica" del proyecto
+  ============================================================================
+
+   Le dice a .NET cómo compilar el proyecto y qué librerías externas necesita.
+   Es el mismo esquema que TareasAPI; la única librería nueva es el conector
+   de MySQL, que es el que nos da las clases de ADO.NET para hablar con la BD.
+  ============================================================================
+-->
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      Microsoft.AspNetCore.OpenApi
+          Genera el documento OpenAPI (JSON) que describe la API.
+
+      Swashbuckle.AspNetCore.SwaggerUi
+          La página visual /swagger para probar los endpoints con clics.
+
+      MySqlConnector
+          Proveedor ADO.NET para MySQL. Trae MySqlConnection, MySqlCommand,
+          MySqlParameter y MySqlDataReader, que son las piezas con las que
+          abrimos la conexión, mandamos SQL y leemos los resultados.
+          (Hereda de las clases base de System.Data: DbConnection, DbCommand...)
+    -->
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="10.2.3" />
+    <PackageReference Include="MySqlConnector" Version="2.6.2" />
+  </ItemGroup>
+
+</Project>

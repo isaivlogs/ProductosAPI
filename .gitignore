@@ -1,0 +1,7 @@
+# Carpetas que genera la compilación: no se guardan en el control de versiones
+bin/
+obj/
+.vs/
+.vscode/
+.idea/
+*.user
