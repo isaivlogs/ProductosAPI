@@ -203,7 +203,7 @@ sequenceDiagram
         E->>R: Insertar(producto)
         R->>C: CrearConexion()
         C-->>R: MySqlConnection
-        R->>M: INSERT ...; SELECT LAST_INSERT_ID();
+        R->>M: INSERT y luego SELECT LAST_INSERT_ID()
         M-->>R: id = 6
         R-->>E: 6
         E->>R: ObtenerPorId(6)
