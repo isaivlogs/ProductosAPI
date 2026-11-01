@@ -9,7 +9,7 @@ Está armada con la misma estructura que `TareasAPI` (Models / Endpoints /
 inyección de dependencias / Swagger / Docker), pero en lugar de guardar los
 datos en una lista en memoria, ahora se guardan de verdad en una tabla.
 
-**Alumno:** Marco Isai Martinez Moreno · up230533 · ISC 8C — UPA
+**Alumno:** Marco Isai Martinez Moreno · UP230533 · ISC09C — UPA
 
 ---
 
