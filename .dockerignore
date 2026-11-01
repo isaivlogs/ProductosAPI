@@ -1,0 +1,14 @@
+# Archivos que NO se copian a la imagen de Docker.
+# Evita meter basura de compilaciones locales y acelera el build.
+bin/
+obj/
+.git/
+.vscode/
+.idea/
+*.user
+Dockerfile
+.dockerignore
+compose.yaml
+README.md
+ProductosAPI.http
+Database/

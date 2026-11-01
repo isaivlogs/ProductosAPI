@@ -1,0 +1,50 @@
+# ============================================================================
+#  compose.yaml  —  MySQL + ProductosAPI con un solo comando
+# ============================================================================
+#
+#      docker compose up --build
+#
+#  Luego abre http://localhost:5135/swagger
+#  Para detener: Ctrl + C (o `docker compose down`).
+#  Para borrar también los datos de MySQL: `docker compose down -v`.
+# ============================================================================
+
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: productos-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: productos_db
+    ports:
+      # 3307 afuera para no chocar con un MySQL que ya tengas instalado (3306).
+      - "3307:3306"
+    volumes:
+      - mysql-datos:/var/lib/mysql
+      # Todo lo que esté en esta carpeta se ejecuta la PRIMERA vez que se crea
+      # el contenedor: crea la tabla y los datos de ejemplo.
+      - ./Database:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  api:
+    build: .
+    image: productosapi
+    container_name: productosapi
+    depends_on:
+      mysql:
+        condition: service_healthy   # espera a que MySQL esté listo
+    ports:
+      - "5135:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      # Dentro de Docker el servidor ya no es "localhost" sino el nombre del
+      # servicio (mysql). Esta variable reemplaza a la de appsettings.json.
+      ConnectionStrings__MySql: "Server=mysql;Port=3306;Database=productos_db;User ID=root;Password=root;"
+    restart: unless-stopped
+
+volumes:
+  mysql-datos:

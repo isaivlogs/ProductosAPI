@@ -1,0 +1,68 @@
+# ============================================================================
+#  ProductosAPI.http  —  Pruebas rápidas sin salir de VS Code
+# ============================================================================
+#  Extensión "REST Client" en VS Code -> botón "Send Request" en cada bloque.
+#  (En Visual Studio 2022 también funciona tal cual.)
+# ============================================================================
+
+@host = http://localhost:5135
+
+### 1) Comprobar la CONEXIÓN con MySQL
+GET {{host}}/conexion
+
+### 2) CONSULTAS: todos los productos
+GET {{host}}/productos
+Accept: application/json
+
+### 3) CONSULTAS: un producto por Id
+GET {{host}}/productos/1
+
+### 4) Id que no existe -> 404
+GET {{host}}/productos/999
+
+### 5) BUSCAR por nombre (parcial)
+GET {{host}}/productos/buscar?nombre=mouse
+
+### 6) BUSCAR por categoría y rango de precio
+GET {{host}}/productos/buscar?categoria=Periféricos&precioMin=500&precioMax=1500
+
+### 7) BUSCAR solo los inactivos
+GET {{host}}/productos/buscar?activo=false
+
+### 8) INSERT: crear un producto (sin id: lo genera MySQL)
+POST {{host}}/productos
+Content-Type: application/json
+
+{
+  "nombre": "Webcam Full HD",
+  "descripcion": "1080p a 60 fps con micrófono",
+  "categoria": "Periféricos",
+  "precio": 699.00,
+  "stock": 15,
+  "activo": true
+}
+
+### 9) INSERT inválido (sin nombre y precio negativo) -> 400
+POST {{host}}/productos
+Content-Type: application/json
+
+{
+  "nombre": "",
+  "precio": -10
+}
+
+### 10) ACTUALIZAR el producto 1 (se mandan todos los campos)
+PUT {{host}}/productos/1
+Content-Type: application/json
+
+{
+  "nombre": "Audífonos inalámbricos Pro",
+  "descripcion": "Bluetooth 5.3, cancelación de ruido y estuche de carga",
+  "categoria": "Audio",
+  "precio": 999.00,
+  "stock": 20,
+  "activo": true
+}
+
+### 11) ELIMINAR el producto 5
+DELETE {{host}}/productos/5
